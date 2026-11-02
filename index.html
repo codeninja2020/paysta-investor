@@ -158,10 +158,10 @@ nav.dots a.on { background: var(--teal); }
     <div class="kicker">Traction at a glance</div>
     <h2>Real money has moved through Paysta for years.</h2>
     <div class="grid g4" style="margin-top:24px">
-      <div class="card stat"><div class="num">R1.27m</div><div class="lbl">invoiced on 922 royalty payout transactions, 2021–2025</div><div class="src">Paysta transaction ledger</div></div>
+      <div class="card stat"><div class="num">R2.05m</div><div class="lbl">in royalty payouts processed, 2021–2025 (900+ transactions)</div><div class="src">Paysta ledger 2021–22; TuneCore and Ditto records 2023–25</div></div>
       <div class="card stat"><div class="num">$172.7k</div><div class="lbl">royalties earned by three managed artist catalogues; $169.6k withdrawn in 361 payouts</div><div class="src">TuneCore statements, 2015 to 1 Nov 2026</div></div>
       <div class="card stat"><div class="num">$51.2k</div><div class="lbl">received in 315 PayPal payments from 49 Paysta Daily customers</div><div class="src">PayPal activity, 2025 and Mar–Oct 2026</div></div>
-      <div class="card stat"><div class="num">7.8%</div><div class="lbl">average fee earned on royalty payouts (R98.8k fees on R1.27m)</div><div class="src">Paysta transaction ledger</div></div>
+      <div class="card stat"><div class="num">7.8%</div><div class="lbl">average fee earned on royalty payouts (R98.8k fees on R1.27m of recorded invoices)</div><div class="src">Paysta transaction ledger</div></div>
     </div>
   </div>
   <span class="pagenum">04</span>
@@ -214,13 +214,12 @@ nav.dots a.on { background: var(--teal); }
   <div class="split">
     <div>
       <div class="kicker">Royalty payouts business</div>
-      <h2>R1.27m invoiced, with a 7.8% take rate.</h2>
-      <p class="lead">The royalty payout business invoiced R1.27m over 922 transactions between 2021 and 2025. Volume peaked at R498k in 2024. Fees rose from 5% to 8% per transaction as the service matured.</p>
-      <p class="note">2025 in this summary is partial: the ledger records $40.4k of TuneCore and Ditto withdrawals in 2025, the highest of any year.</p>
+      <h2>R2.05m in royalty payouts since 2021, at a 7.8% take rate.</h2>
+      <p class="lead">Royalty payouts processed grew from R46k in 2021 to R803k in 2025. Paysta earns a 7.8% average fee on these payouts, and fees rose from 5% to 8% per transaction as the service matured.</p>
+      <p class="note">2021–2022 come from Paysta's ledger summary. 2023–2025 are TuneCore payouts plus Ditto withdrawals, converted at each year's average rate (R18.45, R18.33 and R17.88/$).</p>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Royalty payouts invoiced per year (ZAR)</div>
-      <div class="chart-sub">Bars: invoice value · labels: fees collected</div>
+      <div class="chart-title">Royalty payouts processed per year (ZAR)</div>
       <div id="chart-zar"></div>
       <details><summary>View as table</summary><div id="table-zar"></div></details>
     </div>
@@ -326,8 +325,9 @@ const DATA = {
     ["2022",17107.34,14917.00,45],["2023",21136.23,23398.00,56],["2024",25844.45,24028.00,55],["2025",39862.37,39442.00,61],
     ["2026*",32508.73,33037.17,30]
   ],
-  zar: [ // year, transactions, invoice ZAR, fees ZAR
-    ["2021",66,46000,2300],["2022",285,138000,9660],["2023",242,440154,35212.32],["2024",268,498366,39869.28],["2025*",61,147600,11808]
+  zar: [ // year, royalty payouts ZAR, source
+    ["2021",46000,"Ledger summary"],["2022",138000,"Ledger summary"],["2023",524450,"TuneCore + Ditto at R18.45/$"],
+    ["2024",536855,"TuneCore + Ditto at R18.33/$"],["2025",803390,"TuneCore + Ditto at R17.88/$"]
   ],
   pp: [ // month, payments, USD, customers
     ["2025-01",9,1435.00,3],["2025-02",7,1277.12,2],["2025-03",2,78.29,2],["2025-04",15,2283.07,8],["2025-05",31,14042.38,11],
@@ -420,11 +420,11 @@ barChart("chart-roy", DATA.roy.map(([yr, e, w, n]) => ({
 })), [teal, amber], { aria: "Royalties earned and withdrawn per year, 2018 to 2026", prefix: "$" });
 table("table-roy", ["Year", "Earned", "Withdrawn", "Payouts"], DATA.roy.map(([y, e, w, n]) => [y, fmtUSD(e), fmtUSD(w), n]));
 
-barChart("chart-zar", DATA.zar.map(([yr, n, v, f]) => ({
-  label: yr, values: [v], valueLabel: "R" + fmtK(f) + " fees",
-  tipHtml: `<b>${yr === "2025*" ? "2025 (partial)" : yr}</b><br>Invoiced R${Math.round(v).toLocaleString("en-ZA")}<br>${n} transactions · fees R${Math.round(f).toLocaleString("en-ZA")}`
-})), [teal], { aria: "Royalty payouts invoiced per year in rand", prefix: "R", h: 280 });
-table("table-zar", ["Year", "Transactions", "Invoiced (ZAR)", "Fees (ZAR)"], DATA.zar.map(([y, n, v, f]) => [y, n, "R" + Math.round(v).toLocaleString("en-ZA"), "R" + Math.round(f).toLocaleString("en-ZA")]));
+barChart("chart-zar", DATA.zar.map(([yr, v, src]) => ({
+  label: yr, values: [v], valueLabel: fmtR(v),
+  tipHtml: `<b>${yr}</b><br>Royalty payouts R${Math.round(v).toLocaleString("en-ZA")}<br>${src}`
+})), [teal], { aria: "Royalty payouts processed per year in rand", prefix: "R", h: 280 });
+table("table-zar", ["Year", "Royalty payouts (ZAR)", "Source"], DATA.zar.map(([y, v, src]) => [y, "R" + Math.round(v).toLocaleString("en-ZA"), src]));
 
 barChart("chart-pp", DATA.pp.map(([m, n, v, c]) => {
   const [yy, mm] = m.split("-"), name = MON[+mm - 1];
