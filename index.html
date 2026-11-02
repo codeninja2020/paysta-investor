@@ -167,6 +167,27 @@ nav.dots a.on { background: var(--teal); }
   <span class="pagenum">04</span>
 </section>
 
+<!-- Combined annual transaction value -->
+<section class="slide" id="s4v">
+  <div class="split">
+    <div>
+      <div class="kicker">Combined annual transaction value</div>
+      <h2>R1.43m processed in 2025, R834k so far in 2026.</h2>
+      <div class="grid" style="gap:14px;margin-top:8px">
+        <div class="card stat"><div class="num">R1.43m</div><div class="lbl">processed in 2025 ($80.2k): Paysta Daily R631k plus royalties R803k</div><div class="src">Full year · converted at the 2025 average of R17.88/$</div></div>
+        <div class="card stat"><div class="num">R834k</div><div class="lbl">processed in 2026 to 2 November ($50.8k): Paysta Daily R262k plus royalties R572k</div><div class="src">Converted at R16.42/$ · excludes Jan–Feb PayPal and Apr–Oct Ditto, not yet in the data</div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Combined transaction value per year (ZAR)</div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Royalties</span><span><i style="background:var(--amber)"></i>Paysta Daily (PayPal)</span></div>
+      <div id="chart-vol"></div>
+      <details><summary>View as table</summary><div id="table-vol"></div></details>
+    </div>
+  </div>
+  <span class="pagenum">05</span>
+</section>
+
 <!-- 5. Royalties growth -->
 <section class="slide" id="s5">
   <div class="split">
@@ -183,7 +204,7 @@ nav.dots a.on { background: var(--teal); }
       <details><summary>View as table</summary><div id="table-roy"></div></details>
     </div>
   </div>
-  <span class="pagenum">05</span>
+  <span class="pagenum">06</span>
 </section>
 
 <!-- 6. Ledger -->
@@ -202,7 +223,7 @@ nav.dots a.on { background: var(--teal); }
       <details><summary>View as table</summary><div id="table-zar"></div></details>
     </div>
   </div>
-  <span class="pagenum">06</span>
+  <span class="pagenum">07</span>
 </section>
 
 <!-- 7. Paysta Daily -->
@@ -225,7 +246,7 @@ nav.dots a.on { background: var(--teal); }
     </div>
     <p class="note">January and February 2026 aren't in the PayPal exports provided, so they're left blank. May 2025 includes one customer's $11,000 in seven payments.</p>
   </div>
-  <span class="pagenum">07</span>
+  <span class="pagenum">08</span>
 </section>
 
 <!-- 8. Product -->
@@ -242,7 +263,7 @@ nav.dots a.on { background: var(--teal); }
       <div class="card"><h3>Live since October 2026</h3><ul><li>Both web apps are in production</li><li>The first payouts through PayPal Checkout and WhatsApp are complete</li></ul></div>
     </div>
   </div>
-  <span class="pagenum">08</span>
+  <span class="pagenum">09</span>
 </section>
 
 <!-- 9. Business model -->
@@ -256,7 +277,7 @@ nav.dots a.on { background: var(--teal); }
       <div class="card"><h3>Advances</h3><p>Royalty advances are paid ahead of distributor payouts and recovered from future royalties, priced as a premium payout.</p></div>
     </div>
   </div>
-  <span class="pagenum">09</span>
+  <span class="pagenum">10</span>
 </section>
 
 <!-- 10. Roadmap -->
@@ -275,7 +296,7 @@ nav.dots a.on { background: var(--teal); }
       <li><span><b>Regional expansion:</b> Zimbabwe and other SADC payout corridors.</span></li>
     </ol>
   </div>
-  <span class="pagenum">10</span>
+  <span class="pagenum">11</span>
 </section>
 
 <!-- 11. Team & ask -->
@@ -289,11 +310,14 @@ nav.dots a.on { background: var(--teal); }
     </div>
     <p class="note" style="color:#9fbfba">Figures come from Paysta's transaction ledger, TuneCore statements for three managed catalogues, PayPal activity exports and Paysta's production database. USD and ZAR amounts are as recorded and not converted.</p>
   </div>
-  <span class="pagenum">11</span>
+  <span class="pagenum">12</span>
 </section>
 
 <script>
 const DATA = {
+  vol: [ // year, royalties ZAR, Paysta Daily ZAR, total USD, rate
+    ["2025", 803282, 630621, 80214.79, 17.88], ["2026*", 571937, 261663, 50762.14, 16.42]
+  ],
   roy: [ // year, earned USD, withdrawn USD, payouts
     ["2018",4570.31,6650.00,18],["2019",7385.14,7496.00,20],["2020",7458.35,7675.00,26],["2021",10937.07,9648.00,34],
     ["2022",17107.34,14917.00,45],["2023",21136.23,23398.00,56],["2024",25844.45,24028.00,55],["2025",39862.37,39442.00,61],
@@ -313,7 +337,7 @@ const DATA = {
 const NS = "http://www.w3.org/2000/svg";
 const tip = document.getElementById("tip");
 const fmtUSD = v => "$" + Math.round(v).toLocaleString("en-US");
-const fmtK = v => v >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : Math.round(v) + "";
+const fmtK = v => v >= 1e6 ? (v / 1e6).toFixed(v % 1e6 ? 2 : 0).replace(/\.?0+$/, "") + "m" : v >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : Math.round(v) + "";
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
@@ -379,6 +403,12 @@ function table(target, head, rows) {
 }
 
 const teal = css("--teal"), amber = css("--amber");
+const fmtR = v => "R" + (v >= 1e6 ? (v / 1e6).toFixed(2) + "m" : Math.round(v / 1000) + "k");
+barChart("chart-vol", DATA.vol.map(([yr, r, d, usd, rate]) => ({
+  label: yr === "2026*" ? "2026 (to 2 Nov)" : yr, values: [r, d], valueLabel: fmtR(r + d) + " total",
+  tipHtml: `<b>${yr === "2026*" ? "2026 to 2 Nov" : yr}</b><br>Royalties ${fmtR(r)}<br>Paysta Daily ${fmtR(d)}<br>Total ${fmtR(r + d)} ($${Math.round(usd).toLocaleString("en-US")} at R${rate}/$)`
+})), [teal, amber], { aria: "Combined transaction value per year in rand, royalties and Paysta Daily", prefix: "R", h: 280 });
+table("table-vol", ["Year", "Royalties", "Paysta Daily", "Total ZAR", "Total USD"], DATA.vol.map(([y, r, d, u]) => [y, fmtR(r), fmtR(d), fmtR(r + d), "$" + Math.round(u).toLocaleString("en-US")]));
 barChart("chart-roy", DATA.roy.map(([yr, e, w, n]) => ({
   label: yr, values: [e, w],
   valueLabel: ["2021", "2025", "2026*"].includes(yr) ? fmtK(e) : "",
