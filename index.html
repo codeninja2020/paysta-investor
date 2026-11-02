@@ -172,14 +172,16 @@ nav.dots a.on { background: var(--teal); }
   <div class="split">
     <div>
       <div class="kicker">Combined annual transaction value</div>
-      <h2>R1.43m processed in 2025, R834k so far in 2026.</h2>
+      <h2 style="font-size:clamp(28px,3.6vw,44px)">R1.43m processed in 2025, R834k so far in 2026.</h2>
       <div class="grid" style="gap:14px;margin-top:8px">
-        <div class="card stat"><div class="num">R1.43m</div><div class="lbl">processed in 2025 ($80.2k): Paysta Daily R631k plus royalties R803k</div><div class="src">Full year · converted at the 2025 average of R17.88/$</div></div>
+        <div class="card stat"><div class="num">R524k → R537k</div><div class="lbl">royalty payouts processed in 2023 and 2024 ($28.4k and $29.3k)</div><div class="src">TuneCore and Ditto · at each year's average rate (R18.45, R18.33/$)</div></div>
+        <div class="card stat"><div class="num">R1.43m</div><div class="lbl">processed in 2025 ($80.2k): Paysta Daily R631k plus royalties R803k</div><div class="src">Full year · at the 2025 average of R17.88/$</div></div>
         <div class="card stat"><div class="num">R834k</div><div class="lbl">processed in 2026 to 2 November ($50.8k): Paysta Daily R262k plus royalties R572k</div><div class="src">Converted at R16.42/$ · excludes Jan–Feb PayPal and Apr–Oct Ditto, not yet in the data</div></div>
       </div>
     </div>
     <div class="chart-card">
       <div class="chart-title">Combined transaction value per year (ZAR)</div>
+      <div class="chart-sub">PayPal (Paysta Daily) data starts in 2025; 2023–2024 show royalties only</div>
       <div class="legend"><span><i style="background:var(--teal)"></i>Royalties</span><span><i style="background:var(--amber)"></i>Paysta Daily (PayPal)</span></div>
       <div id="chart-vol"></div>
       <details><summary>View as table</summary><div id="table-vol"></div></details>
@@ -315,8 +317,9 @@ nav.dots a.on { background: var(--teal); }
 
 <script>
 const DATA = {
-  vol: [ // year, royalties ZAR, Paysta Daily ZAR, total USD, rate
-    ["2025", 803282, 630621, 80214.79, 17.88], ["2026*", 571937, 261663, 50762.14, 16.42]
+  vol: [ // year, royalties ZAR, Paysta Daily ZAR (0 = no PayPal data), total USD, rate
+    ["2023", 524450, 0, 28420.11, 18.45], ["2024", 536855, 0, 29281.00, 18.33],
+    ["2025", 803390, 630706, 80214.79, 17.88], ["2026*", 571937, 261663, 50762.14, 16.42]
   ],
   roy: [ // year, earned USD, withdrawn USD, payouts
     ["2018",4570.31,6650.00,18],["2019",7385.14,7496.00,20],["2020",7458.35,7675.00,26],["2021",10937.07,9648.00,34],
@@ -372,6 +375,7 @@ function barChart(target, groups, colors, opts) {
   groups.forEach((g, i) => {
     const gx = m.l + i * gw;
     g.values.forEach((v, j) => {
+      if (v === 0) return;
       if (v == null) {
         const t = el("text", { x: gx + gw / 2, y: m.t + ih - 6, "text-anchor": "middle", "font-size": 10, fill: css("--muted") }, svg);
         t.textContent = "n/a"; return;
@@ -405,10 +409,10 @@ function table(target, head, rows) {
 const teal = css("--teal"), amber = css("--amber");
 const fmtR = v => "R" + (v >= 1e6 ? (v / 1e6).toFixed(2) + "m" : Math.round(v / 1000) + "k");
 barChart("chart-vol", DATA.vol.map(([yr, r, d, usd, rate]) => ({
-  label: yr === "2026*" ? "2026 (to 2 Nov)" : yr, values: [r, d], valueLabel: fmtR(r + d) + " total",
-  tipHtml: `<b>${yr === "2026*" ? "2026 to 2 Nov" : yr}</b><br>Royalties ${fmtR(r)}<br>Paysta Daily ${fmtR(d)}<br>Total ${fmtR(r + d)} ($${Math.round(usd).toLocaleString("en-US")} at R${rate}/$)`
+  label: yr === "2026*" ? "2026 (to 2 Nov)" : yr, values: [r, d], valueLabel: fmtR(r + d),
+  tipHtml: `<b>${yr === "2026*" ? "2026 to 2 Nov" : yr}</b><br>Royalties ${fmtR(r)}<br>Paysta Daily ${d ? fmtR(d) : "no PayPal data"}<br>Total ${fmtR(r + d)} ($${Math.round(usd).toLocaleString("en-US")} at R${rate}/$)`
 })), [teal, amber], { aria: "Combined transaction value per year in rand, royalties and Paysta Daily", prefix: "R", h: 280 });
-table("table-vol", ["Year", "Royalties", "Paysta Daily", "Total ZAR", "Total USD"], DATA.vol.map(([y, r, d, u]) => [y, fmtR(r), fmtR(d), fmtR(r + d), "$" + Math.round(u).toLocaleString("en-US")]));
+table("table-vol", ["Year", "Royalties", "Paysta Daily", "Total ZAR", "Total USD"], DATA.vol.map(([y, r, d, u]) => [y, fmtR(r), d ? fmtR(d) : "–", fmtR(r + d), "$" + Math.round(u).toLocaleString("en-US")]));
 barChart("chart-roy", DATA.roy.map(([yr, e, w, n]) => ({
   label: yr, values: [e, w],
   valueLabel: ["2021", "2025", "2026*"].includes(yr) ? fmtK(e) : "",
