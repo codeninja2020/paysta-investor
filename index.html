@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paysta Pitch Deck</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Paysta: royalty and PayPal payouts for African creators. Traction from 2015 to November 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef;
+  --surface: #fcfcfb;
+  --ink: #12201f;
+  --ink-2: #44514f;
+  --muted: #74807e;
+  --line: #e3e0d8;
+  --teal: #0d9488;
+  --teal-deep: #0b4f4a;
+  --amber: #d97706;
+  --grid: #ebe8e1;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: "Plus Jakarta Sans", system-ui, sans-serif; line-height: 1.5; }
+.slide {
+  min-height: 100vh; min-height: 100svh; scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 64px max(16px, 7vw); position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.slide > * { max-width: 1120px; width: 100%; margin-left: auto; margin-right: auto; }
+.kicker { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 14px; }
+h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -.02em; line-height: 1.08; }
+h1 { font-size: clamp(44px, 8vw, 96px); }
+h2 { font-size: clamp(30px, 4.6vw, 54px); margin-bottom: 20px; }
+.lead { font-size: clamp(17px, 2vw, 22px); color: var(--ink-2); max-width: 760px; margin-left: 0; }
+.slide > .pagenum { width: auto; max-width: none; margin: 0; }
+.pagenum { position: absolute; right: max(16px, 4vw); bottom: 22px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+.cover { background: var(--teal-deep); color: #f3f7f6; border-bottom: none; }
+.cover .kicker { color: #7fd8cd; }
+.cover .lead { color: #c9dedb; }
+.cover .pagenum { color: #9fbfba; }
+.wordmark { font-family: Fraunces, serif; font-size: 22px; font-weight: 700; margin-bottom: auto; padding-bottom: 48px; letter-spacing: -.01em; }
+.cover-foot { margin-top: 56px; display: flex; gap: 32px; flex-wrap: wrap; font-size: 14px; color: #c9dedb; }
+.cover-foot b { color: #fff; font-weight: 600; }
+.grid { display: grid; gap: 20px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.g2x { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .g2x { grid-template-columns: 1fr; } }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+.card h3 { font-size: 18px; margin-bottom: 8px; }
+.card p, .card li { color: var(--ink-2); font-size: 15px; }
+.card ul { padding-left: 18px; }
+.stat .num { font-family: Fraunces, serif; font-size: clamp(34px, 4.4vw, 52px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; color: var(--ink); }
+.stat .lbl { color: var(--ink-2); font-size: 14px; margin-top: 8px; }
+.stat .src { color: var(--muted); font-size: 12px; margin-top: 10px; }
+.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 12px; }
+.chart-title { font-weight: 700; font-size: 15px; }
+.chart-sub { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--ink-2); margin: 4px 0 6px; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+svg text { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-size: 13px; padding: 8px 10px; border-radius: 8px; opacity: 0; transition: opacity .12s; z-index: 10; white-space: nowrap; }
+.tip b { font-weight: 700; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+details { margin-top: 10px; font-size: 13px; color: var(--ink-2); }
+summary { cursor: pointer; color: var(--teal); font-weight: 600; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: center; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li { counter-increment: s; display: flex; gap: 14px; align-items: flex-start; color: var(--ink-2); }
+.steps li::before { content: counter(s); flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--teal); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: #e6f3f1; color: var(--teal-deep); margin: 0 6px 6px 0; }
+.note { font-size: 12px; color: var(--muted); margin-top: 18px; }
+.ask { background: var(--teal-deep); color: #f3f7f6; }
+.ask .card { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
+.ask .card p, .ask .card li { color: #cfe2df; }
+.ask .kicker { color: #7fd8cd; }
+.ask .lead { color: #c9dedb; }
+.ask .pagenum { color: #9fbfba; }
+.tbc { border: 1px dashed rgba(255,255,255,.4); border-radius: 8px; padding: 2px 8px; font-size: .8em; }
+nav.dots { position: fixed; right: 14px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 5; }
+nav.dots a { width: 8px; height: 8px; border-radius: 50%; background: #b9c3c1; display: block; }
+nav.dots a.on { background: var(--teal); }
+@media (max-width: 640px) { nav.dots { display: none; } .slide { padding-top: 48px; padding-bottom: 56px; } }
+@media print { html { scroll-snap-type: none; } .slide { page-break-after: always; min-height: auto; } nav.dots { display: none; } }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<nav class="dots" id="dots" aria-label="Slides"></nav>
+
+<!-- 1. Cover -->
+<section class="slide cover" id="s1">
+  <div class="wordmark">Paysta</div>
+  <div>
+    <div class="kicker">Investor overview · November 2026</div>
+    <h1>Getting African creators paid fast.</h1>
+    <p class="lead" style="margin-top:22px">Paysta turns US-dollar income from streaming royalties and PayPal into money in a South African bank account or e-wallet. It runs on the web and on WhatsApp.</p>
+    <div class="cover-foot">
+      <span><b>paysta.co.za</b></span>
+      <span><b>app.paysta.co.za</b> · royalties</span>
+      <span><b>payments.paysta.co.za</b> · PayPal payouts</span>
+    </div>
+  </div>
+  <span class="pagenum">01</span>
+</section>
+
+<!-- 2. Problem -->
+<section class="slide" id="s2">
+  <div>
+    <div class="kicker">The problem</div>
+    <h2>Creators earn in dollars, but they live in rand.</h2>
+    <div class="grid g2x" style="margin-top:28px">
+      <div class="card"><h3>Payments take 4–7 days</h3><p>Withdrawals from distributors and PayPal take four to seven days to reach a local account. Creators who need the money now have to wait, or turn to costly informal options.</p></div>
+      <div class="card"><h3>Royalties stuck abroad</h3><p>Independent artists are paid by TuneCore, Ditto and CD Baby in US dollars. Withdrawals need foreign accounts, Payoneer or PayPal, and each hop adds days and fees.</p></div>
+      <div class="card"><h3>PayPal is hard to cash out</h3><p>Freelancers and creators get paid in PayPal dollars, but turning that balance into rand in their own bank account or e-wallet is slow and confusing.</p></div>
+      <div class="card"><h3>Disconnected payment systems</h3><p>Mobile money and local banks aren't linked to global payment platforms like PayPal, TuneCore and Payoneer. Money can't flow straight from where creators earn to where they spend, so every payout needs workarounds.</p></div>
+    </div>
+  </div>
+  <span class="pagenum">02</span>
+</section>
+
+<!-- 3. Solution -->
+<section class="slide" id="s3">
+  <div>
+    <div class="kicker">The solution</div>
+    <h2>Two products, one payout engine.</h2>
+    <p class="lead">Paysta pays creators first, in rand, to their bank or mobile money. We then take on the 4–7 day wait and the complicated processing ourselves, across distributors, PayPal and local banks.</p>
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card">
+        <span class="pill">app.paysta.co.za</span>
+        <h3 style="margin-top:8px">Paysta Royalties</h3>
+        <p>Artists see their balance and request an <b>instant</b> payout, so there's no 4–7 day wait. They can also choose a <b>standard</b> payout (7–10 days) or an <b>advance</b> against future royalties. Paysta withdraws from the distributor and pays rand to their bank or mobile money, with a PDF invoice for every payout.</p>
+      </div>
+      <div class="card">
+        <span class="pill">payments.paysta.co.za</span><span class="pill">WhatsApp</span>
+        <h3 style="margin-top:8px">Paysta Daily: PayPal payouts</h3>
+        <p>Customers get an instant rand quote, pay through PayPal Checkout and receive rand in their FNB, Capitec or other bank account, or an e-wallet. The whole flow also runs inside WhatsApp, with an AI assistant and saved payout details.</p>
+      </div>
+    </div>
+  </div>
+  <span class="pagenum">03</span>
+</section>
+
+<!-- 4. Traction headline -->
+<section class="slide" id="s4">
+  <div>
+    <div class="kicker">Traction at a glance</div>
+    <h2>Real money has moved through Paysta for years.</h2>
+    <div class="grid g4" style="margin-top:24px">
+      <div class="card stat"><div class="num">R1.27m</div><div class="lbl">invoiced on 922 royalty payout transactions, 2021–2025</div><div class="src">Paysta transaction ledger</div></div>
+      <div class="card stat"><div class="num">$172.7k</div><div class="lbl">royalties earned by three managed artist catalogues; $169.6k withdrawn in 361 payouts</div><div class="src">TuneCore statements, 2015 to 1 Nov 2026</div></div>
+      <div class="card stat"><div class="num">$51.2k</div><div class="lbl">received in 315 PayPal payments from 49 Paysta Daily customers</div><div class="src">PayPal activity, 2025 and Mar–Oct 2026</div></div>
+      <div class="card stat"><div class="num">7.8%</div><div class="lbl">average fee earned on royalty payouts (R98.8k fees on R1.27m)</div><div class="src">Paysta transaction ledger</div></div>
+    </div>
+  </div>
+  <span class="pagenum">04</span>
+</section>
+
+<!-- 5. Royalties growth -->
+<section class="slide" id="s5">
+  <div class="split">
+    <div>
+      <div class="kicker">Royalties</div>
+      <h2>Artist earnings grew 3.6× in four years.</h2>
+      <p class="lead">Royalties across the three catalogues Paysta manages rose from <b>$10.9k in 2021</b> to <b>$39.9k in 2025</b>. 2026 is already at <b>$32.5k</b> by 1 November. Almost all of it is withdrawn, and Paysta earns a fee on each payout it handles.</p>
+      <p class="note">Top sources of streaming income: Apple/iTunes 41%, YouTube 26%, Spotify 26%.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Royalties earned vs withdrawn, three catalogues (USD)</div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Earned</span><span><i style="background:var(--amber)"></i>Withdrawn</span></div>
+      <div id="chart-roy"></div>
+      <details><summary>View as table</summary><div id="table-roy"></div></details>
+    </div>
+  </div>
+  <span class="pagenum">05</span>
+</section>
+
+<!-- 6. Ledger -->
+<section class="slide" id="s6">
+  <div class="split">
+    <div>
+      <div class="kicker">Royalty payouts business</div>
+      <h2>R1.27m invoiced, with a 7.8% take rate.</h2>
+      <p class="lead">The royalty payout business invoiced R1.27m over 922 transactions between 2021 and 2025. Volume peaked at R498k in 2024. Fees rose from 5% to 8% per transaction as the service matured.</p>
+      <p class="note">2025 in this summary is partial: the ledger records $40.4k of TuneCore and Ditto withdrawals in 2025, the highest of any year.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Royalty payouts invoiced per year (ZAR)</div>
+      <div class="chart-sub">Bars: invoice value · labels: fees collected</div>
+      <div id="chart-zar"></div>
+      <details><summary>View as table</summary><div id="table-zar"></div></details>
+    </div>
+  </div>
+  <span class="pagenum">06</span>
+</section>
+
+<!-- 7. Paysta Daily -->
+<section class="slide" id="s7">
+  <div>
+    <div class="kicker">Paysta Daily: PayPal payouts</div>
+    <h2>Loyal customers who come back.</h2>
+    <div class="split" style="align-items:start">
+      <div class="grid" style="gap:14px">
+        <div class="card stat"><div class="num">94%</div><div class="lbl">of payments came from customers who paid more than once (30 of 49 customers)</div></div>
+        <div class="card stat"><div class="num">$100</div><div class="lbl">median payment; average $162</div></div>
+        <div class="card stat"><div class="num">11 of 28</div><div class="lbl">2026 customers had already used Paysta in 2025</div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">PayPal payments received per month (USD)</div>
+        <div class="chart-sub">Customer payments only; transfers between Paysta's own accounts excluded</div>
+        <div id="chart-pp"></div>
+        <details><summary>View as table</summary><div id="table-pp"></div></details>
+      </div>
+    </div>
+    <p class="note">January and February 2026 aren't in the PayPal exports provided, so they're left blank. May 2025 includes one customer's $11,000 in seven payments.</p>
+  </div>
+  <span class="pagenum">07</span>
+</section>
+
+<!-- 8. Product -->
+<section class="slide" id="s8">
+  <div>
+    <div class="kicker">Product</div>
+    <h2>Built to run at scale, without a call centre.</h2>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card"><h3>WhatsApp-native</h3><ul><li>Quote, cash out and pay by chat, with tap buttons</li><li>Saved payout details for returning customers</li><li>Automatic payment reminders</li></ul></div>
+      <div class="card"><h3>AI assistant</h3><ul><li>Understands messages like "how much for 250 on Capitec?"</li><li>Every amount comes from the pricing engine; it never quotes its own figures</li><li>Hands over to a person when it's unsure</li></ul></div>
+      <div class="card"><h3>Operations</h3><ul><li>Staff dashboards and audit trails</li><li>Automatic PayPal reconciliation</li><li>Invoices, and alerts by email and WhatsApp</li></ul></div>
+      <div class="card"><h3>Royalty tools</h3><ul><li>TuneCore, CD Baby and Ditto accounts in one place</li><li>Advances against future royalties</li><li>Custom fees and refunds on rejected payouts</li></ul></div>
+      <div class="card"><h3>Infrastructure</h3><ul><li>Cloudflare edge hosting and a Postgres database</li><li>Infrastructure as code (Terraform), deployed from GitHub</li><li>No stored cloud keys</li></ul></div>
+      <div class="card"><h3>Live since October 2026</h3><ul><li>Both web apps are in production</li><li>The first payouts through PayPal Checkout and WhatsApp are complete</li></ul></div>
+    </div>
+  </div>
+  <span class="pagenum">08</span>
+</section>
+
+<!-- 9. Business model -->
+<section class="slide" id="s9">
+  <div>
+    <div class="kicker">Business model</div>
+    <h2>We earn on every dollar that moves.</h2>
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card"><h3>Royalty payout fees</h3><p>A fee on each withdrawal, with higher fees for instant payouts and advances. The historical take rate is <b>7.8%</b>.</p></div>
+      <div class="card"><h3>FX spread on PayPal payouts</h3><p>The customer sees one rand amount, and Paysta keeps the margin between the live dollar rate and that quote.</p></div>
+      <div class="card"><h3>Advances</h3><p>Royalty advances are paid ahead of distributor payouts and recovered from future royalties, priced as a premium payout.</p></div>
+    </div>
+  </div>
+  <span class="pagenum">09</span>
+</section>
+
+<!-- 10. Roadmap -->
+<section class="slide" id="s10">
+  <div class="split">
+    <div>
+      <div class="kicker">What's next</div>
+      <h2>From payouts to a creator wallet.</h2>
+      <p class="lead">Each step makes payouts faster and brings in more creators per rand spent.</p>
+    </div>
+    <ol class="steps">
+      <li><span><b>Instant rand settlement:</b> automate bank payouts the moment PayPal confirms, using PayShap.</span></li>
+      <li><span><b>More distributors:</b> direct balance sync from TuneCore, Ditto and CD Baby, so artists see what they can withdraw today.</span></li>
+      <li><span><b>Data-driven advances:</b> size advances from each artist's earnings history across Apple, Spotify and YouTube.</span></li>
+      <li><span><b>Grow on WhatsApp:</b> referrals, agents and other languages, all handled by the AI assistant.</span></li>
+      <li><span><b>Regional expansion:</b> Zimbabwe and other SADC payout corridors.</span></li>
+    </ol>
+  </div>
+  <span class="pagenum">10</span>
+</section>
+
+<!-- 11. Team & ask -->
+<section class="slide ask" id="s11">
+  <div>
+    <div class="kicker">Team &amp; ask</div>
+    <h2>Built by an engineer who has run this business since 2021.</h2>
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card"><h3>Tinashe Jambo, founder</h3><p>Data engineer (AWS, Snowflake). MSc Mechanical Engineering, University of Cape Town. Co-founder and COO of Texcite. Has run Paysta's royalty payouts since 2021 and built its platform end to end.</p></div>
+      <div class="card"><h3>The ask</h3><p>We're raising <span class="tbc">amount to be confirmed</span> to automate rand settlement, add distributor integrations and grow Paysta Daily on WhatsApp.</p><p style="margin-top:10px">Contact: payments@paysta.co.za</p></div>
+    </div>
+    <p class="note" style="color:#9fbfba">Figures come from Paysta's transaction ledger, TuneCore statements for three managed catalogues, PayPal activity exports and Paysta's production database. USD and ZAR amounts are as recorded and not converted.</p>
+  </div>
+  <span class="pagenum">11</span>
+</section>
+
+<script>
+const DATA = {
+  roy: [ // year, earned USD, withdrawn USD, payouts
+    ["2018",4570.31,6650.00,18],["2019",7385.14,7496.00,20],["2020",7458.35,7675.00,26],["2021",10937.07,9648.00,34],
+    ["2022",17107.34,14917.00,45],["2023",21136.23,23398.00,56],["2024",25844.45,24028.00,55],["2025",39862.37,39442.00,61],
+    ["2026*",32508.73,33037.17,30]
+  ],
+  zar: [ // year, transactions, invoice ZAR, fees ZAR
+    ["2021",66,46000,2300],["2022",285,138000,9660],["2023",242,440154,35212.32],["2024",268,498366,39869.28],["2025*",61,147600,11808]
+  ],
+  pp: [ // month, payments, USD, customers
+    ["2025-01",9,1435.00,3],["2025-02",7,1277.12,2],["2025-03",2,78.29,2],["2025-04",15,2283.07,8],["2025-05",31,14042.38,11],
+    ["2025-06",27,4192.39,12],["2025-07",30,3934.34,10],["2025-08",23,2994.61,13],["2025-09",14,2548.19,10],["2025-10",6,553.83,4],
+    ["2025-11",8,812.00,3],["2025-12",15,1126.71,7],["2026-01",null,null,null],["2026-02",null,null,null],["2026-03",34,5464.85,12],
+    ["2026-04",31,2811.27,12],["2026-05",21,2375.29,12],["2026-06",8,762.38,4],["2026-07",15,1667.92,8],["2026-08",2,166.00,2],
+    ["2026-09",3,619.18,3],["2026-10",14,2013.63,10]
+  ]
+};
+const NS = "http://www.w3.org/2000/svg";
+const tip = document.getElementById("tip");
+const fmtUSD = v => "$" + Math.round(v).toLocaleString("en-US");
+const fmtK = v => v >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : Math.round(v) + "";
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function showTip(evt, html) { tip.innerHTML = html; tip.style.opacity = 1; moveTip(evt); }
+function moveTip(evt) {
+  const w = tip.offsetWidth, x = Math.min(evt.clientX + 14, window.innerWidth - w - 8);
+  tip.style.left = x + "px"; tip.style.top = (evt.clientY - 44) + "px";
+}
+function hideTip() { tip.style.opacity = 0; }
+function niceMax(v) { const p = Math.pow(10, Math.floor(Math.log10(v))); return Math.ceil(v / p / (v / p > 5 ? 2 : 1)) * p * (v / p > 5 ? 2 : 1); }
+
+// Bar chart: groups[] = {label, values[], tipHtml, valueLabel}
+function barChart(target, groups, colors, opts) {
+  const W = 640, H = opts.h || 300, m = { t: 22, r: 8, b: 30, l: 44 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": opts.aria });
+  const max = niceMax(Math.max(...groups.flatMap(g => g.values.filter(v => v != null))));
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, n = groups.length, gw = iw / n;
+  const y = v => m.t + ih - (v / max) * ih;
+  for (let i = 0; i <= 4; i++) {
+    const v = max * i / 4, yy = y(v);
+    el("line", { x1: m.l, x2: W - m.r, y1: yy, y2: yy, stroke: i ? css("--grid") : "#c9c5bb", "stroke-width": 1 }, svg);
+    const t = el("text", { x: m.l - 8, y: yy + 4, "text-anchor": "end", "font-size": 11, fill: css("--muted") }, svg);
+    t.textContent = (opts.prefix || "") + fmtK(v);
+  }
+  const k = groups[0].values.length, pad = gw * (k > 1 ? .18 : .22), bw = (gw - pad * 2 - (k - 1) * 2) / k;
+  groups.forEach((g, i) => {
+    const gx = m.l + i * gw;
+    g.values.forEach((v, j) => {
+      if (v == null) {
+        const t = el("text", { x: gx + gw / 2, y: m.t + ih - 6, "text-anchor": "middle", "font-size": 10, fill: css("--muted") }, svg);
+        t.textContent = "n/a"; return;
+      }
+      const x = gx + pad + j * (bw + 2), h = Math.max(1, m.t + ih - y(v)), r = Math.min(4, bw / 2, h);
+      el("path", { d: `M${x},${m.t + ih} V${m.t + ih - h + r} Q${x},${m.t + ih - h} ${x + r},${m.t + ih - h} H${x + bw - r} Q${x + bw},${m.t + ih - h} ${x + bw},${m.t + ih - h + r} V${m.t + ih} Z`, fill: colors[j] }, svg);
+    });
+    if (g.valueLabel) {
+      const top = Math.max(...g.values.filter(v => v != null));
+      const t = el("text", { x: gx + gw / 2, y: y(top) - 7, "text-anchor": "middle", "font-size": 11, "font-weight": 600, fill: css("--ink-2") }, svg);
+      t.textContent = g.valueLabel;
+    }
+    if (g.label) {
+      const t = el("text", { x: gx + gw / 2, y: H - 10, "text-anchor": "middle", "font-size": 11, fill: css("--muted") }, svg);
+      t.textContent = g.label;
+    }
+    const hit = el("rect", { x: gx, y: m.t, width: gw, height: ih, fill: "transparent" }, svg);
+    if (g.tipHtml) {
+      hit.addEventListener("mouseenter", e => showTip(e, g.tipHtml));
+      hit.addEventListener("mousemove", moveTip);
+      hit.addEventListener("mouseleave", hideTip);
+    }
+  });
+  document.getElementById(target).appendChild(svg);
+}
+function table(target, head, rows) {
+  document.getElementById(target).innerHTML = "<table><thead><tr>" + head.map(h => `<th>${h}</th>`).join("") +
+    "</tr></thead><tbody>" + rows.map(r => "<tr>" + r.map(c => `<td>${c}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+}
+
+const teal = css("--teal"), amber = css("--amber");
+barChart("chart-roy", DATA.roy.map(([yr, e, w, n]) => ({
+  label: yr, values: [e, w],
+  valueLabel: ["2021", "2025", "2026*"].includes(yr) ? fmtK(e) : "",
+  tipHtml: `<b>${yr === "2026*" ? "2026 (to 1 Nov)" : yr}</b><br>Earned ${fmtUSD(e)}<br>Withdrawn ${fmtUSD(w)} · ${n} payouts`
+})), [teal, amber], { aria: "Royalties earned and withdrawn per year, 2018 to 2026", prefix: "$" });
+table("table-roy", ["Year", "Earned", "Withdrawn", "Payouts"], DATA.roy.map(([y, e, w, n]) => [y, fmtUSD(e), fmtUSD(w), n]));
+
+barChart("chart-zar", DATA.zar.map(([yr, n, v, f]) => ({
+  label: yr, values: [v], valueLabel: "R" + fmtK(f) + " fees",
+  tipHtml: `<b>${yr === "2025*" ? "2025 (partial)" : yr}</b><br>Invoiced R${Math.round(v).toLocaleString("en-ZA")}<br>${n} transactions · fees R${Math.round(f).toLocaleString("en-ZA")}`
+})), [teal], { aria: "Royalty payouts invoiced per year in rand", prefix: "R", h: 280 });
+table("table-zar", ["Year", "Transactions", "Invoiced (ZAR)", "Fees (ZAR)"], DATA.zar.map(([y, n, v, f]) => [y, n, "R" + Math.round(v).toLocaleString("en-ZA"), "R" + Math.round(f).toLocaleString("en-ZA")]));
+
+barChart("chart-pp", DATA.pp.map(([m, n, v, c]) => {
+  const [yy, mm] = m.split("-"), name = MON[+mm - 1];
+  return {
+    label: (mm === "01" ? name + " '" + yy.slice(2) : ["04", "07", "10"].includes(mm) ? name : ""),
+    values: [v],
+    tipHtml: v == null ? `<b>${name} ${yy}</b><br>Not in the PayPal exports` : `<b>${name} ${yy}</b><br>${fmtUSD(v)} from ${n} payments · ${c} customers`
+  };
+}), [teal], { aria: "PayPal payments received per month, January 2025 to October 2026", prefix: "$", h: 260 });
+table("table-pp", ["Month", "Payments", "USD", "Customers"], DATA.pp.map(([m, n, v, c]) => [m, n ?? "–", v == null ? "–" : fmtUSD(v), c ?? "–"]));
+
+// Slide dots + keyboard navigation
+const slides = [...document.querySelectorAll(".slide")], dots = document.getElementById("dots");
+slides.forEach((s, i) => { const a = document.createElement("a"); a.href = "#" + s.id; a.setAttribute("aria-label", "Slide " + (i + 1)); dots.appendChild(a); });
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) [...dots.children].forEach((d, i) => d.classList.toggle("on", slides[i] === e.target));
+}), { threshold: .55 });
+slides.forEach(s => obs.observe(s));
+document.addEventListener("keydown", e => {
+  if (!["ArrowDown", "ArrowRight", "PageDown", "ArrowUp", "ArrowLeft", "PageUp", " "].includes(e.key)) return;
+  const cur = slides.findIndex(s => Math.abs(s.getBoundingClientRect().top) < window.innerHeight / 2);
+  const next = ["ArrowUp", "ArrowLeft", "PageUp"].includes(e.key) ? cur - 1 : cur + 1;
+  if (slides[next]) { e.preventDefault(); slides[next].scrollIntoView(); }
+});
+</script>
+</body>
+</html>
