@@ -213,13 +213,14 @@ nav.dots a.on { background: var(--teal); }
 <section class="slide" id="s6">
   <div class="split">
     <div>
-      <div class="kicker">Royalty payouts business</div>
-      <h2>R2.05m in royalty payouts since 2021, at a 7.8% take rate.</h2>
-      <p class="lead">Royalty payouts processed grew from R46k in 2021 to R803k in 2025. Paysta earns a 7.8% average fee on these payouts, and fees rose from 5% to 8% per transaction as the service matured.</p>
-      <p class="note">2021–2022 come from Paysta's ledger summary. 2023–2025 are TuneCore payouts plus Ditto withdrawals, converted at each year's average rate (R18.45, R18.33 and R17.88/$).</p>
+      <div class="kicker">Revenue</div>
+      <h2>R212k in fees since 2021, at about 8% per transaction.</h2>
+      <p class="lead">Paysta earns about 8% on each royalty payout and each Paysta Daily PayPal payout. Royalty payouts grew from R46k in 2021 to R803k in 2025 (R2.05m in total), and Paysta Daily added R631k in 2025, so fees reached about <b>R115k in 2025</b> and R67k so far in 2026.</p>
+      <p class="note">2021–2022 fees are as recorded in Paysta's ledger (fees rose from 5% to 8% over that time). From 2023, fees are estimated at 8% of value processed, in line with the 8.0% recorded in 2023–2024. Value processed is converted at each year's average rate.</p>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Royalty payouts processed per year (ZAR)</div>
+      <div class="chart-title">Fees earned per year (ZAR)</div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Royalty payout fees</span><span><i style="background:var(--amber)"></i>Paysta Daily fees</span></div>
       <div id="chart-zar"></div>
       <details><summary>View as table</summary><div id="table-zar"></div></details>
     </div>
@@ -274,7 +275,7 @@ nav.dots a.on { background: var(--teal); }
     <h2>We earn on every dollar that moves.</h2>
     <div class="grid g3" style="margin-top:24px">
       <div class="card"><h3>Royalty payout fees</h3><p>A fee on each withdrawal, with higher fees for instant payouts and advances. The historical take rate is <b>7.8%</b>.</p></div>
-      <div class="card"><h3>FX spread on PayPal payouts</h3><p>The customer sees one rand amount, and Paysta keeps the margin between the live dollar rate and that quote.</p></div>
+      <div class="card"><h3>FX spread on PayPal payouts</h3><p>The customer sees one rand amount, and Paysta keeps the margin between the live dollar rate and that quote: about 8% per transaction.</p></div>
       <div class="card"><h3>Advances</h3><p>Royalty advances are paid ahead of distributor payouts and recovered from future royalties, priced as a premium payout.</p></div>
     </div>
   </div>
@@ -325,9 +326,9 @@ const DATA = {
     ["2022",17107.34,14917.00,45],["2023",21136.23,23398.00,56],["2024",25844.45,24028.00,55],["2025",39862.37,39442.00,61],
     ["2026*",32508.73,33037.17,30]
   ],
-  zar: [ // year, royalty payouts ZAR, source
-    ["2021",46000,"Ledger summary"],["2022",138000,"Ledger summary"],["2023",524450,"TuneCore + Ditto at R18.45/$"],
-    ["2024",536855,"TuneCore + Ditto at R18.33/$"],["2025",803390,"TuneCore + Ditto at R17.88/$"]
+  zar: [ // year, royalty fees ZAR, Paysta Daily fees ZAR, royalty value, Paysta Daily value, basis
+    ["2021",2300,0,46000,0,"recorded"],["2022",9660,0,138000,0,"recorded"],["2023",41956,0,524450,0,"est. 8%"],
+    ["2024",42948,0,536855,0,"est. 8%"],["2025",64271,50456,803390,630706,"est. 8%"],["2026*",45755,20933,571937,261663,"est. 8%"]
   ],
   pp: [ // month, payments, USD, customers
     ["2025-01",9,1435.00,3],["2025-02",7,1277.12,2],["2025-03",2,78.29,2],["2025-04",15,2283.07,8],["2025-05",31,14042.38,11],
@@ -420,11 +421,12 @@ barChart("chart-roy", DATA.roy.map(([yr, e, w, n]) => ({
 })), [teal, amber], { aria: "Royalties earned and withdrawn per year, 2018 to 2026", prefix: "$" });
 table("table-roy", ["Year", "Earned", "Withdrawn", "Payouts"], DATA.roy.map(([y, e, w, n]) => [y, fmtUSD(e), fmtUSD(w), n]));
 
-barChart("chart-zar", DATA.zar.map(([yr, v, src]) => ({
-  label: yr, values: [v], valueLabel: fmtR(v),
-  tipHtml: `<b>${yr}</b><br>Royalty payouts R${Math.round(v).toLocaleString("en-ZA")}<br>${src}`
-})), [teal], { aria: "Royalty payouts processed per year in rand", prefix: "R", h: 280 });
-table("table-zar", ["Year", "Royalty payouts (ZAR)", "Source"], DATA.zar.map(([y, v, src]) => [y, "R" + Math.round(v).toLocaleString("en-ZA"), src]));
+barChart("chart-zar", DATA.zar.map(([yr, rf, pf, rv, pv, basis]) => ({
+  label: yr === "2026*" ? "2026 (to 2 Nov)" : yr, values: [rf, pf], valueLabel: fmtR(rf + pf),
+  tipHtml: `<b>${yr === "2026*" ? "2026 to 2 Nov" : yr}</b><br>Royalty fees ${fmtR(rf)} on ${fmtR(rv)}` +
+    (pv ? `<br>Paysta Daily fees ${fmtR(pf)} on ${fmtR(pv)}` : "") + `<br>Total ${fmtR(rf + pf)} (${basis})`
+})), [teal, amber], { aria: "Fees earned per year in rand, royalty payouts and Paysta Daily", prefix: "R", h: 280 });
+table("table-zar", ["Year", "Royalty fees", "Paysta Daily fees", "Total", "Basis"], DATA.zar.map(([y, rf, pf, rv, pv, b]) => [y, fmtR(rf), pf ? fmtR(pf) : "–", fmtR(rf + pf), b]));
 
 barChart("chart-pp", DATA.pp.map(([m, n, v, c]) => {
   const [yy, mm] = m.split("-"), name = MON[+mm - 1];
